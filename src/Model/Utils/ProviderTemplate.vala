@@ -23,7 +23,7 @@ public abstract class EmA.ProviderTemplate : Provider {
     }
 
     public override bool is_location_supported (Location location) {
-        return location.country_code == UNKNOWN || location.country_code in supported_country_codes;
+        return location.country_code in supported_country_codes;
     }
 
     public override async void refresh (Gee.Collection<Location>? locations) {

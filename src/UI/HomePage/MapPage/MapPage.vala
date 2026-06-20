@@ -100,5 +100,7 @@ public class EmA.MapPage : Adw.Bin {
             warning_layers.insert ((int) i, layer);
             simple_map.add_overlay_layer (layer);
         }
+
+        warning ("Have %d warning layers", warning_layers.size);
     }
 }

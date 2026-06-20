@@ -7,6 +7,7 @@ public enum EmA.CountryCode {
     DE,
     UA,
     US,
+    NO,
     UNKNOWN,
     OTHER;
 

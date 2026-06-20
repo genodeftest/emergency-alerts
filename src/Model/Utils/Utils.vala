@@ -51,6 +51,53 @@ namespace EmA.Utils {
         return parser.get_root ();
     }
 
+    public static async Xml.Doc* get_xml (string uri) throws Error {
+        var message = new Soup.Message ("GET", uri);
+
+        var input_stream = yield session.send_async (message, Priority.DEFAULT, null);
+
+        //  const int SIZE = 1024;
+
+        //  var array = new ByteArray ();
+        //  try {
+        //      var buffer = new uint8[SIZE];
+        //      while ((yield input_stream.read_async (buffer, Priority.DEFAULT, null)) > 0) {
+        //          array.append (buffer);
+        //          buffer = new uint8[SIZE];
+        //      }
+        //  } catch (Error e) {
+        //      throw new IOError.FAILED ("Failed to read from stream: %s".printf (e.message));
+        //  }
+
+        //  var text = (string) array.data;
+
+        var data_is = new DataInputStream (input_stream);
+
+        string text;
+        var builder = new StringBuilder ();
+        try {
+            while (true) {
+                var line = yield data_is.read_line_async (Priority.DEFAULT);
+                if (line == null) {
+                    break;
+                }
+                builder.append (line);
+                builder.append ("\n");
+            }
+            text = builder.str;
+        } catch (Error e) {
+            throw new IOError.FAILED ("Failed to read from stream: %s".printf (e.message));
+        }
+
+        var doc = Xml.Parser.parse_memory (builder.str, (int) builder.len);
+
+        if (doc == null) {
+            throw new IOError.FAILED ("Failed to parse xml");
+        }
+
+        return doc;
+    }
+
     /**
      * Checks whether a file was already cached for uri and returns it.
      * If the file was not cached, it will be downloaded and cached.

@@ -18,6 +18,7 @@ json_dep = dependency('json-glib-1.0')
 portal_dep = dependency('libportal')
 shumate_dep = dependency('shumate-1.0')
 soup_dep = dependency('libsoup-3.0')
+xml_dep = dependency('libxml-2.0')
 
 ema_deps = [
     adw_dep,
@@ -26,7 +27,8 @@ ema_deps = [
     json_dep,
     portal_dep,
     shumate_dep,
-    soup_dep
+    soup_dep,
+    xml_dep
 ]
 
 subdir('data')
